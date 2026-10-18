@@ -1,0 +1,11 @@
+bitexpert_sylius_minimum_order_value:
+    ui:
+        minimum_order_value: Mindestbestellwert
+        minimum_order_value_not_reached: "Der Mindestbestellwert von %minimum_order_value% wurde nicht erreicht"
+    checkout:
+        error:
+            minimum_order_value: "Der Gesamtbetrag Ihrer Bestellung liegt unter dem Mindestbestellwert von %minimumOrderValue% %currency%. Bitte legen Sie weitere Artikel in Ihren Warenkorb."
+            minimum_order_value_generic: "Der Gesamtbetrag Ihrer Bestellung liegt unter dem erforderlichen Mindestbestellwert, um Ihren Einkauf abzuschließen. Bitte legen Sie weitere Artikel in Ihren Warenkorb."
+    shop:
+        cart:
+            warning: "Der Gesamtbetrag Ihres Warenkorbs von %order_total% liegt unter dem Mindestbestellwert von %minimum_order_value%. Bitte legen Sie weitere Artikel in Ihren Warenkorb, um Ihren Einkauf abzuschließen."

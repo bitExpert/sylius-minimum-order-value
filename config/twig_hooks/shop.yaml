@@ -1,2 +1,6 @@
 sylius_twig_hooks:
     hooks:
+        'sylius_shop.cart.index.content.form.sections.general#left':
+            minimum_order_value_warning:
+                template: '@BitExpertSyliusMinimumOrderValuePlugin/shop/cart/_minimum_order_value_warning.html.twig'
+                priority: 300

@@ -1,0 +1,28 @@
+{# Overrides vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/templates/checkout/complete/content/form/navigation.html.twig #}
+{# Disables the "Place order" button when the order total is below the configured minimum order value #}
+
+{# Get the current cart using the plugin's Twig function #}
+{% set cart = bitexpert_minimum_order_value_cart() %}
+
+{# Get the current order total and the configured minimum #}
+{% set cart_total = cart ? cart.total : 0 %}
+{% set minimum_order_value = cart and cart.channel ? cart.channel.minimumOrderValue : 0 %}
+
+{# Check if we need to disable the button #}
+{% set below_minimum = minimum_order_value > 0 and cart_total < (minimum_order_value * 100) %}
+
+<div class="text-center">
+    <button
+        type="submit"
+        id="confirmation-button"
+        class="btn btn-primary"
+        {{ sylius_test_html_attribute('button', 'confirmation-button') }}
+        {% if below_minimum %}
+            disabled
+            aria-disabled="true"
+            title="{{ 'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached'|trans({'%minimum_order_value%': minimum_order_value|number_format(2)}) }}"
+        {% endif %}
+    >
+        {{ 'sylius.ui.place_order'|trans }}
+    </button>
+</div>

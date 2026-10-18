@@ -2,11 +2,6 @@
     "name": "bitexpert/sylius-minimum-order-value",
     "type": "sylius-plugin",
     "description": "Require a minium oder value to complete the order",
-    "keywords": [
-        "sylius",
-        "sylius-plugin",
-        "test-appication"
-    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -54,9 +49,6 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev"
-        },
         "symfony": {
             "require": "^7.4"
         },

@@ -6,6 +6,12 @@ twig:
     paths:
         '%kernel.project_dir%/../../../tests/TestApplication/templates': ~
 
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: Tests\BitExpert\SyliusMinimumOrderValuePlugin\Entity\Channel
+
 # Remove if you do not need to extend entities
 doctrine:
     orm:
@@ -16,4 +22,4 @@ doctrine:
                         is_bundle: false
                         type: attribute
                         dir: '%kernel.project_dir%/../../../tests/TestApplication/src/Entity'
-                        prefix: Tests\BitExpert\SyliusMinimumOrderValuePlugin
+                        prefix: Tests\BitExpert\SyliusMinimumOrderValuePlugin\Entity

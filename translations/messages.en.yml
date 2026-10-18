@@ -1,0 +1,11 @@
+bitexpert_sylius_minimum_order_value:
+    ui:
+        minimum_order_value: Minimum Order Value
+        minimum_order_value_not_reached: "Minimum order value of %minimum_order_value% not reached"
+    checkout:
+        error:
+            minimum_order_value: "Your order total is below the minimum order value of %minimumOrderValue% %currency%. Please add more items to your cart."
+            minimum_order_value_generic: "Your order total is below the minimum order value required to complete your purchase. Please add more items to your cart."
+    shop:
+        cart:
+            warning: "Your cart total of %order_total% is below the minimum order value of %minimum_order_value%. Please add more items to your cart to complete your purchase."
