@@ -3,6 +3,8 @@
 The **Minimum Order Value** plugin for **Sylius** allows admin users to define a minimum
 order value per channel. Orders whose total is below that value cannot be completed.
 
+![Minimum order value alert in cart](docs/assets/cart.png)
+
 ## Installation
 
 1. Install the package via Composer:
