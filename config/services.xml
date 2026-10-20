@@ -24,7 +24,8 @@
             <tag name="kernel.event_listener" event="workflow.guard" method="guardCheckoutComplete" />
         </service>
 
-        <service id="BitExpert\SyliusMinimumOrderValuePlugin\Twig\Extension\MinimumOrderValueCartExtension">
+        <service id="BitExpert\SyliusMinimumOrderValuePlugin\Twig\Extension\MinimumOrderValueExtension">
+            <argument type="service" id="BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface" />
             <argument type="service" id="sylius.context.cart" />
             <tag name="twig.extension" />
         </service>

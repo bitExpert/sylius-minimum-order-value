@@ -1,15 +1,8 @@
 {# Overrides vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/templates/cart/index/content/form/sections/general/checkout.html.twig #}
 {# Disables the checkout button when the cart total is below the configured minimum order value #}
 
-{# Get the current cart using the plugin's Twig function #}
-{% set cart = bitexpert_minimum_order_value_cart() %}
-
-{# Get the current cart total from the rendered order_total element #}
-{% set cart_total = cart ? cart.total : 0 %}
-{% set minimum_order_value = cart and cart.channel ? cart.channel.minimumOrderValue : 0 %}
-
-{# Check if we need to disable the button #}
-{% set disabled = minimum_order_value > 0 and cart_total < (minimum_order_value * 100) %}
+{% set status = minimum_order_value_status() %}
+{% set disabled = status is not null and not status.allowed %}
 
 <div class="d-grid">
     <button
@@ -19,7 +12,7 @@
         {% if disabled %}
             disabled
             aria-disabled="true"
-            title="{{ 'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached'|trans({'%minimum_order_value%': minimum_order_value|number_format(2)}) }}"
+            title="{{ status.message|trans({'%minimum_order_value%': status.minimumOrderValue|default(0)|number_format(2)}) }}"
         {% endif %}
     >
         {{ 'sylius.ui.checkout'|trans }}

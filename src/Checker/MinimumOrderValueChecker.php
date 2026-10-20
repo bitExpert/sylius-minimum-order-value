@@ -20,7 +20,7 @@ use Sylius\Component\Core\Model\OrderInterface;
  * the minimum order value configured on the channel is stored in major units (e.g. 49.99).
  * This checker converts the configured minimum to the smallest currency unit before comparing it with the total.
  */
-final class MinimumOrderValueChecker implements MinimumOrderValueCheckerInterface
+final readonly class MinimumOrderValueChecker implements MinimumOrderValueCheckerInterface
 {
     public function findMinimumOrderValue(OrderInterface $order): ?float
     {
@@ -34,13 +34,24 @@ final class MinimumOrderValueChecker implements MinimumOrderValueCheckerInterfac
         return (null !== $minimumOrderValue && $minimumOrderValue > 0.0) ? $minimumOrderValue : null;
     }
 
-    public function isBelowMinimumOrderValue(OrderInterface $order): bool
+    public function evaluate(OrderInterface $order): CheckResult
     {
         $minimumOrderValue = $this->findMinimumOrderValue($order);
+        
         if (null === $minimumOrderValue) {
-            return false;
+            return new CheckResult(true);
         }
 
-        return $order->getTotal() < (int) round($minimumOrderValue * 100);
+        $isBelow = $order->getTotal() < (int) round($minimumOrderValue * 100);
+        
+        if ($isBelow) {
+            return new CheckResult(
+                false,
+                'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached',
+                $minimumOrderValue
+            );
+        }
+
+        return new CheckResult(true, null, $minimumOrderValue);
     }
 }
