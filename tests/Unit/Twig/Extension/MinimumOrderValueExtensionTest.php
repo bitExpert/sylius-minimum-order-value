@@ -28,7 +28,7 @@ final class MinimumOrderValueExtensionTest extends TestCase
     {
         $extension = new MinimumOrderValueExtension(
             $this->createMock(MinimumOrderValueCheckerInterface::class),
-            $this->createMock(CartContextInterface::class)
+            $this->createMock(CartContextInterface::class),
         );
 
         $functions = $extension->getFunctions();
@@ -50,7 +50,7 @@ final class MinimumOrderValueExtensionTest extends TestCase
 
         $extension = new MinimumOrderValueExtension(
             $checker,
-            $this->createMock(CartContextInterface::class)
+            $this->createMock(CartContextInterface::class),
         );
 
         $result = $extension->getStatus($order);
@@ -69,7 +69,7 @@ final class MinimumOrderValueExtensionTest extends TestCase
         $checker->method('evaluate')->willReturn(new CheckResult(
             false,
             'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached',
-            50.0
+            50.0,
         ));
 
         $order = $this->createMock(OrderInterface::class);
@@ -78,11 +78,12 @@ final class MinimumOrderValueExtensionTest extends TestCase
 
         $extension = new MinimumOrderValueExtension(
             $checker,
-            $this->createMock(CartContextInterface::class)
+            $this->createMock(CartContextInterface::class),
         );
 
         $result = $extension->getStatus($order);
 
+        self::assertInstanceOf(CheckResult::class, $result);
         self::assertFalse($result->allowed);
         self::assertSame('bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached', $result->message);
         self::assertSame(50.0, $result->minimumOrderValue);
@@ -98,7 +99,7 @@ final class MinimumOrderValueExtensionTest extends TestCase
 
         $extension = new MinimumOrderValueExtension(
             $this->createMock(MinimumOrderValueCheckerInterface::class),
-            $cartContext
+            $cartContext,
         );
 
         self::assertNull($extension->getStatus());

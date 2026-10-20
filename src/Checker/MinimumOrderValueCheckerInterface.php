@@ -35,8 +35,6 @@ interface MinimumOrderValueCheckerInterface
      * Evaluate the given order and return a result with permission status and optional message.
      *
      * @param OrderInterface $order The order to evaluate.
-     *
-     * @return CheckResult
      */
     public function evaluate(OrderInterface $order): CheckResult;
 }

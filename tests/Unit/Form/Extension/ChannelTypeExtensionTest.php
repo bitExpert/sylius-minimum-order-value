@@ -50,13 +50,17 @@ final class ChannelTypeExtensionTest extends TestCase
                     self::assertSame(2, $options['scale']);
                     self::assertSame(['min' => 0, 'step' => 0.01], $options['attr']);
 
-                    self::assertCount(2, $options['constraints']);
+                    /** @var array<GreaterThanOrEqual|LessThanOrEqual> $constraints */
+                    $constraints = $options['constraints'];
+                    self::assertCount(2, $constraints);
 
-                    $lower = $options['constraints'][0];
+                    /** @var GreaterThanOrEqual $lower */
+                    $lower = $constraints[0];
                     self::assertInstanceOf(GreaterThanOrEqual::class, $lower);
                     self::assertSame(0, $lower->value);
 
-                    $upper = $options['constraints'][1];
+                    /** @var LessThanOrEqual $upper */
+                    $upper = $constraints[1];
                     self::assertInstanceOf(LessThanOrEqual::class, $upper);
                     self::assertSame(99999999.99, $upper->value);
 

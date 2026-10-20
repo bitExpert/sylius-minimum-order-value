@@ -44,19 +44,19 @@ final class MinimumOrderValueExtension extends AbstractExtension
     public function getStatus(?OrderInterface $order = null, ?string $currencyCode = null, ?string $localeCode = null): ?CheckResult
     {
         $order = $order ?? $this->getCart();
-        
+
         if (!$order instanceof OrderInterface) {
             return null;
         }
 
         $result = $this->checker->evaluate($order);
-        
+
         // If currency/locale not provided, try to get from order
         if ($currencyCode === null || $localeCode === null) {
             $currencyCode = $currencyCode ?? $order->getCurrencyCode();
             $localeCode = $localeCode ?? $order->getLocaleCode();
         }
-        
+
         return new CheckResult($result->allowed, $result->message, $result->minimumOrderValue, $currencyCode, $localeCode);
     }
 
