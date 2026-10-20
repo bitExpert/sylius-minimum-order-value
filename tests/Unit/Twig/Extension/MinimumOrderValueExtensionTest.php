@@ -15,6 +15,7 @@ namespace Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Twig\Extension;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\CheckResult;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface;
 use BitExpert\SyliusMinimumOrderValuePlugin\Twig\Extension\MinimumOrderValueExtension;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
@@ -22,7 +23,8 @@ use Twig\TwigFunction;
 
 final class MinimumOrderValueExtensionTest extends TestCase
 {
-    public function test_registers_the_twig_function(): void
+    #[Test]
+    public function registersTheTwigFunction(): void
     {
         $extension = new MinimumOrderValueExtension(
             $this->createMock(MinimumOrderValueCheckerInterface::class),
@@ -36,7 +38,8 @@ final class MinimumOrderValueExtensionTest extends TestCase
         self::assertSame('minimum_order_value_status', $functions[0]->getName());
     }
 
-    public function test_returns_check_result(): void
+    #[Test]
+    public function returnsCheckResult(): void
     {
         $checker = $this->createMock(MinimumOrderValueCheckerInterface::class);
         $checker->method('evaluate')->willReturn(new CheckResult(true, null, 50.0));
@@ -59,7 +62,8 @@ final class MinimumOrderValueExtensionTest extends TestCase
         self::assertSame('en_US', $result->localeCode);
     }
 
-    public function test_returns_check_result_with_message(): void
+    #[Test]
+    public function returnsCheckResultWithMessage(): void
     {
         $checker = $this->createMock(MinimumOrderValueCheckerInterface::class);
         $checker->method('evaluate')->willReturn(new CheckResult(
@@ -86,7 +90,8 @@ final class MinimumOrderValueExtensionTest extends TestCase
         self::assertSame('en_US', $result->localeCode);
     }
 
-    public function test_returns_null_when_no_order_and_no_cart(): void
+    #[Test]
+    public function returnsNullWhenNoOrderAndNoCart(): void
     {
         $cartContext = $this->createMock(CartContextInterface::class);
         $cartContext->method('getCart')->willThrowException(new \Sylius\Component\Order\Context\CartNotFoundException());

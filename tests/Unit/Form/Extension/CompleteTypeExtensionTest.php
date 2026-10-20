@@ -16,6 +16,7 @@ use BitExpert\SyliusMinimumOrderValuePlugin\Checker\CheckResult;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueChecker;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface;
 use BitExpert\SyliusMinimumOrderValuePlugin\Form\Extension\CompleteTypeExtension;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\Bundle\CoreBundle\Form\Type\Checkout\CompleteType;
 use Sylius\Component\Core\Model\Channel;
@@ -32,12 +33,14 @@ final class CompleteTypeExtensionTest extends TestCase
 {
     private const TRANSLATION_KEY = 'bitexpert_sylius_minimum_order_value.checkout.error.minimum_order_value';
 
-    public function test_extends_the_checkout_complete_type(): void
+    #[Test]
+    public function extendsTheCheckoutCompleteType(): void
     {
         self::assertSame([CompleteType::class], iterator_to_array(CompleteTypeExtension::getExtendedTypes(), false));
     }
 
-    public function test_adds_a_translated_error_when_the_total_is_below_the_minimum(): void
+    #[Test]
+    public function addsATranslatedErrorWhenTheTotalIsBelowTheMinimum(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::once())
@@ -62,7 +65,8 @@ final class CompleteTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, $this->createOrder(4999, 'EUR', new MinimumOrderValueChannel(50.0))));
     }
 
-    public function test_does_not_add_an_error_when_the_minimum_is_met(): void
+    #[Test]
+    public function doesNotAddAnErrorWhenTheMinimumIsMet(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::never())->method('trans');
@@ -75,7 +79,8 @@ final class CompleteTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, $this->createOrder(5000, 'EUR', new MinimumOrderValueChannel(50.0))));
     }
 
-    public function test_adds_a_generic_error_when_a_custom_checker_rejects_without_a_channel_minimum(): void
+    #[Test]
+    public function addsAGenericErrorWhenACustomCheckerRejectsWithoutAChannelMinimum(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::once())
@@ -108,7 +113,8 @@ final class CompleteTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, $this->createOrder(4999, 'EUR', new Channel())));
     }
 
-    public function test_a_custom_checker_can_allow_an_order_below_the_channel_minimum(): void
+    #[Test]
+    public function aCustomCheckerCanAllowAnOrderBelowTheChannelMinimum(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::never())->method('trans');
@@ -128,7 +134,8 @@ final class CompleteTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, $this->createOrder(4999, 'EUR', new MinimumOrderValueChannel(50.0))));
     }
 
-    public function test_does_not_add_an_error_when_the_channel_has_no_restriction(): void
+    #[Test]
+    public function doesNotAddAnErrorWhenTheChannelHasNoRestriction(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::never())->method('trans');
@@ -141,7 +148,8 @@ final class CompleteTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, $this->createOrder(0, 'EUR', new MinimumOrderValueChannel(null))));
     }
 
-    public function test_does_not_add_an_error_for_other_data(): void
+    #[Test]
+    public function doesNotAddAnErrorForOtherData(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::never())->method('trans');
