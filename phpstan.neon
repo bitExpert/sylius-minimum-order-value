@@ -1,0 +1,18 @@
+parameters:
+    level: max
+    reportUnmatchedIgnoredErrors: false
+    paths:
+        - src
+        - tests/TestApplication
+        - tests/Unit
+
+    excludePaths:
+        # Makes PHPStan crash
+        - 'src/DependencyInjection/Configuration.php'
+
+        # Test dependencies
+        - 'tests/Application/app/**.php'
+        - 'tests/Application/src/**.php'
+        - 'tests/TestApplication/config/services_test.php'
+
+    ignoreErrors:

@@ -37,18 +37,18 @@ final readonly class MinimumOrderValueChecker implements MinimumOrderValueChecke
     public function evaluate(OrderInterface $order): CheckResult
     {
         $minimumOrderValue = $this->findMinimumOrderValue($order);
-        
+
         if (null === $minimumOrderValue) {
             return new CheckResult(true);
         }
 
         $isBelow = $order->getTotal() < (int) round($minimumOrderValue * 100);
-        
+
         if ($isBelow) {
             return new CheckResult(
                 false,
                 'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached',
-                $minimumOrderValue
+                $minimumOrderValue,
             );
         }
 

@@ -15,7 +15,6 @@ namespace BitExpert\SyliusMinimumOrderValuePlugin\Listener;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\Workflow\Event\GuardEvent;
-use Symfony\Component\Workflow\Transition;
 
 /**
  * Hard guard for every path that applies the checkout "complete" transition (API, custom code).
@@ -37,7 +36,7 @@ final readonly class MinimumOrderValueListener
             return;
         }
 
-        if (!$event->getTransition() instanceof Transition || 'complete' !== $event->getTransition()->getName()) {
+        if ('complete' !== $event->getTransition()->getName()) {
             return;
         }
 
@@ -47,7 +46,7 @@ final readonly class MinimumOrderValueListener
         }
 
         $result = $this->minimumOrderValueChecker->evaluate($order);
-        
+
         if ($result->allowed) {
             return;
         }

@@ -46,7 +46,7 @@ final class CompleteTypeExtension extends AbstractTypeExtension
             }
 
             $result = $this->minimumOrderValueChecker->evaluate($order);
-            
+
             if ($result->allowed) {
                 return;
             }

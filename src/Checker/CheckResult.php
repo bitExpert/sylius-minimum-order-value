@@ -29,5 +29,6 @@ final class CheckResult
         public ?float $minimumOrderValue = null,
         public ?string $currencyCode = null,
         public ?string $localeCode = null,
-    ) {}
+    ) {
+    }
 }
