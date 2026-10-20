@@ -14,18 +14,21 @@ namespace Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Entity;
 
 use BitExpert\SyliusMinimumOrderValuePlugin\Entity\MinimumOrderValueAwareInterface;
 use BitExpert\SyliusMinimumOrderValuePlugin\Entity\MinimumOrderValueTrait;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class MinimumOrderValueTraitTest extends TestCase
 {
-    public function test_returns_null_when_no_value_has_been_configured(): void
+    #[Test]
+    public function returnsNullWhenNoValueHasBeenConfigured(): void
     {
         $channel = new ChannelWithMinimumOrderValue();
 
         self::assertNull($channel->getMinimumOrderValue());
     }
 
-    public function test_sets_and_gets_the_minimum_order_value(): void
+    #[Test]
+    public function setsAndGetsTheMinimumOrderValue(): void
     {
         $channel = new ChannelWithMinimumOrderValue();
         $channel->setMinimumOrderValue(1234.56);
@@ -33,7 +36,8 @@ final class MinimumOrderValueTraitTest extends TestCase
         self::assertSame(1234.56, $channel->getMinimumOrderValue());
     }
 
-    public function test_stores_the_value_as_a_decimal_string_with_two_decimal_places(): void
+    #[Test]
+    public function storesTheValueAsADecimalStringWithTwoDecimalPlaces(): void
     {
         $channel = new ChannelWithMinimumOrderValue();
         $channel->setMinimumOrderValue(50.5);
@@ -43,7 +47,8 @@ final class MinimumOrderValueTraitTest extends TestCase
         self::assertSame('50.50', $property->getValue($channel));
     }
 
-    public function test_clears_the_value_when_null_is_set(): void
+    #[Test]
+    public function clearsTheValueWhenNullIsSet(): void
     {
         $channel = new ChannelWithMinimumOrderValue();
         $channel->setMinimumOrderValue(50.0);

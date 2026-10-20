@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Form\Extension;
 
 use BitExpert\SyliusMinimumOrderValuePlugin\Form\Extension\ChannelTypeExtension;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\Bundle\ChannelBundle\Form\Type\ChannelType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -26,12 +27,14 @@ use Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Fixtures\MinimumOrderValu
 
 final class ChannelTypeExtensionTest extends TestCase
 {
-    public function test_extends_the_sylius_channel_type(): void
+    #[Test]
+    public function extendsTheSyliusChannelType(): void
     {
         self::assertSame([ChannelType::class], iterator_to_array(ChannelTypeExtension::getExtendedTypes(), false));
     }
 
-    public function test_adds_the_field_when_the_channel_is_minimum_order_value_aware(): void
+    #[Test]
+    public function addsTheFieldWhenTheChannelIsMinimumOrderValueAware(): void
     {
         $listener = $this->buildFormAndCaptureListener();
 
@@ -64,7 +67,8 @@ final class ChannelTypeExtensionTest extends TestCase
         $listener(new FormEvent($form, new MinimumOrderValueChannel(50.0)));
     }
 
-    public function test_does_not_add_the_field_for_other_data(): void
+    #[Test]
+    public function doesNotAddTheFieldForOtherData(): void
     {
         $listener = $this->buildFormAndCaptureListener();
 

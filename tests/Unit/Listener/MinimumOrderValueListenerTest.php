@@ -14,6 +14,7 @@ namespace Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Listener;
 
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueChecker;
 use BitExpert\SyliusMinimumOrderValuePlugin\Listener\MinimumOrderValueListener;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -34,7 +35,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         $this->listener = new MinimumOrderValueListener(new MinimumOrderValueChecker());
     }
 
-    public function test_blocks_the_complete_transition_when_the_total_is_below_the_minimum(): void
+    #[Test]
+    public function blocksTheCompleteTransitionWhenTheTotalIsBelowTheMinimum(): void
     {
         $event = $this->createGuardEvent($this->createOrder(4999, new MinimumOrderValueChannel(50.0)));
 
@@ -46,7 +48,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertSame(self::BLOCKER_MESSAGE, $blockers[0]->getMessage());
     }
 
-    public function test_allows_the_complete_transition_when_the_total_meets_the_minimum(): void
+    #[Test]
+    public function allowsTheCompleteTransitionWhenTheTotalMeetsTheMinimum(): void
     {
         $event = $this->createGuardEvent($this->createOrder(5000, new MinimumOrderValueChannel(50.0)));
 
@@ -55,7 +58,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertFalse($event->isBlocked());
     }
 
-    public function test_allows_the_complete_transition_when_the_channel_is_not_minimum_order_value_aware(): void
+    #[Test]
+    public function allowsTheCompleteTransitionWhenTheChannelIsNotMinimumOrderValueAware(): void
     {
         $event = $this->createGuardEvent($this->createOrder(0, new Channel()));
 
@@ -64,7 +68,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertFalse($event->isBlocked());
     }
 
-    public function test_allows_the_complete_transition_when_no_minimum_is_configured(): void
+    #[Test]
+    public function allowsTheCompleteTransitionWhenNoMinimumIsConfigured(): void
     {
         $event = $this->createGuardEvent($this->createOrder(0, new MinimumOrderValueChannel(null)));
 
@@ -73,7 +78,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertFalse($event->isBlocked());
     }
 
-    public function test_ignores_events_of_other_workflows(): void
+    #[Test]
+    public function ignoresEventsOfOtherWorkflows(): void
     {
         $event = $this->createGuardEvent(
             $this->createOrder(0, new MinimumOrderValueChannel(50.0)),
@@ -85,7 +91,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertFalse($event->isBlocked());
     }
 
-    public function test_ignores_other_transitions(): void
+    #[Test]
+    public function ignoresOtherTransitions(): void
     {
         $event = $this->createGuardEvent(
             $this->createOrder(0, new MinimumOrderValueChannel(50.0)),
@@ -97,7 +104,8 @@ final class MinimumOrderValueListenerTest extends TestCase
         self::assertFalse($event->isBlocked());
     }
 
-    public function test_ignores_subjects_that_are_not_orders(): void
+    #[Test]
+    public function ignoresSubjectsThatAreNotOrders(): void
     {
         $event = $this->createGuardEvent(new \stdClass());
 
