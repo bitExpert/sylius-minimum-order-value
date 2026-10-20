@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Sylius Minimum Order Value package.
+ *
+ * (c) bitExpert AG
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 declare(strict_types=1);
 
 namespace Tests\BitExpert\SyliusMinimumOrderValuePlugin\Unit\Form\Extension;
 
+use BitExpert\SyliusMinimumOrderValuePlugin\Checker\CheckResult;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueChecker;
 use BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface;
 use BitExpert\SyliusMinimumOrderValuePlugin\Form\Extension\CompleteTypeExtension;
@@ -78,9 +87,9 @@ final class CompleteTypeExtensionTest extends TestCase
             ->willReturn('translated generic error');
 
         $rejectingChecker = new class() implements MinimumOrderValueCheckerInterface {
-            public function isBelowMinimumOrderValue(OrderInterface $order): bool
+            public function evaluate(OrderInterface $order): CheckResult
             {
-                return true;
+                return new CheckResult(false);
             }
         };
 
@@ -105,9 +114,9 @@ final class CompleteTypeExtensionTest extends TestCase
         $translator->expects(self::never())->method('trans');
 
         $allowingChecker = new class() implements MinimumOrderValueCheckerInterface {
-            public function isBelowMinimumOrderValue(OrderInterface $order): bool
+            public function evaluate(OrderInterface $order): CheckResult
             {
-                return false;
+                return new CheckResult(true);
             }
         };
 

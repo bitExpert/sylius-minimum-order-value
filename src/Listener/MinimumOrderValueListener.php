@@ -46,13 +46,12 @@ final readonly class MinimumOrderValueListener
             return;
         }
 
-        if (!$this->minimumOrderValueChecker->isBelowMinimumOrderValue($order)) {
+        $result = $this->minimumOrderValueChecker->evaluate($order);
+        
+        if ($result->allowed) {
             return;
         }
 
-        $event->setBlocked(
-            true,
-            'The order total is below the minimum order value required for this channel.',
-        );
+        $event->setBlocked(true, $result->message ?? 'The order total is below the minimum order value required for this channel.');
     }
 }

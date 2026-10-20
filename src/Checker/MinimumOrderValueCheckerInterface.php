@@ -32,7 +32,11 @@ use Sylius\Component\Core\Model\OrderInterface;
 interface MinimumOrderValueCheckerInterface
 {
     /**
-     * Returns true when the order total is below the configured minimum order value.
+     * Evaluate the given order and return a result with permission status and optional message.
+     *
+     * @param OrderInterface $order The order to evaluate.
+     *
+     * @return CheckResult
      */
-    public function isBelowMinimumOrderValue(OrderInterface $order): bool;
+    public function evaluate(OrderInterface $order): CheckResult;
 }

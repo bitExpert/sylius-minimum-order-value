@@ -45,11 +45,13 @@ final class CompleteTypeExtension extends AbstractTypeExtension
                 return;
             }
 
-            if (!$this->minimumOrderValueChecker->isBelowMinimumOrderValue($order)) {
+            $result = $this->minimumOrderValueChecker->evaluate($order);
+            
+            if ($result->allowed) {
                 return;
             }
 
-            $event->getForm()->addError(new FormError($this->createErrorMessage($order)));
+            $event->getForm()->addError(new FormError($this->createErrorMessage($order, $result->message)));
         });
     }
 
@@ -67,8 +69,12 @@ final class CompleteTypeExtension extends AbstractTypeExtension
      * A custom checker that does not derive its limit from the channel falls back
      * to the message without an amount.
      */
-    private function createErrorMessage(OrderInterface $order): string
+    private function createErrorMessage(OrderInterface $order, ?string $message): string
     {
+        if (null !== $message && $message !== 'bitexpert_sylius_minimum_order_value.ui.minimum_order_value_not_reached') {
+            return $message;
+        }
+
         $minimumOrderValue = $this->resolveConfiguredMinimum($order);
 
         if (null === $minimumOrderValue) {
