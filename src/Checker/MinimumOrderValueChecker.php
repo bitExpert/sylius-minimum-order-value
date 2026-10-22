@@ -42,7 +42,7 @@ final readonly class MinimumOrderValueChecker implements MinimumOrderValueChecke
             return new CheckResult(true);
         }
 
-        $isBelow = $order->getTotal() < (int) round($minimumOrderValue * 100);
+        $isBelow = $order->getItemsTotal() < (int) round($minimumOrderValue * 100);
 
         if ($isBelow) {
             return new CheckResult(
