@@ -24,7 +24,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Rejects the checkout completion form when the order total is below the
+ * Rejects the checkout completion form when the order's items total is below the
  * minimum order value configured for the channel, so the customer stays on the
  * checkout page and sees an inline error instead of a failed state machine
  * transition.

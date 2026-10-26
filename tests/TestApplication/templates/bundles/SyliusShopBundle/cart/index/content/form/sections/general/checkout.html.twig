@@ -1,5 +1,5 @@
 {# Overrides vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/templates/cart/index/content/form/sections/general/checkout.html.twig #}
-{# Disables the checkout button when the cart total is below the configured minimum order value #}
+{# Disables the checkout button when the cart items total is below the configured minimum order value #}
 
 {% set status = minimum_order_value_status() %}
 {% set disabled = status is not null and not status.allowed %}

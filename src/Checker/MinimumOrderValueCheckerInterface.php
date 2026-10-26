@@ -17,10 +17,10 @@ use Sylius\Component\Core\Model\OrderInterface;
 /**
  * Contract for evaluating whether an order reaches the configured minimum order value.
  *
- * The default implementation ({@see MinimumOrderValueChecker}) compares the order total
- * (smallest currency unit, e.g. cents) with the minimum configured on the channel
- * (major units, e.g. 49.99). If your business rules differ - for example you need to
- * exclude promotions, include shipping or evaluate per product category - replace the
+ * The default implementation ({@see MinimumOrderValueChecker}) compares the order's items total
+ * (smallest currency unit, e.g. cents, excluding shipping and order-level discounts) with the
+ * minimum configured on the channel (major units, e.g. 49.99). If your business rules differ -
+ * for example you need to include shipping or evaluate per product category - replace the
  * service with your own implementation:
  *
  * ```yaml

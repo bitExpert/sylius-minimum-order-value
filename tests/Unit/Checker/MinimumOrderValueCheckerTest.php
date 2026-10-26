@@ -79,7 +79,7 @@ final class MinimumOrderValueCheckerTest extends TestCase
     }
 
     #[Test]
-    public function detectsATotalBelowTheMinimumOneCentBelowTheThreshold(): void
+    public function detectsAnItemsTotalBelowTheMinimumOneCentBelowTheThreshold(): void
     {
         // 49.99 stored as 4999 in the smallest currency unit vs a 50.00 minimum.
         $order = $this->createOrder(4999, new MinimumOrderValueChannel(50.0));
@@ -92,7 +92,7 @@ final class MinimumOrderValueCheckerTest extends TestCase
     }
 
     #[Test]
-    public function allowsATotalMeetingTheMinimumExactly(): void
+    public function allowsAnItemsTotalMeetingTheMinimumExactly(): void
     {
         $order = $this->createOrder(5000, new MinimumOrderValueChannel(50.0));
 
@@ -103,7 +103,7 @@ final class MinimumOrderValueCheckerTest extends TestCase
     }
 
     #[Test]
-    public function allowsATotalAboveTheMinimum(): void
+    public function allowsAnItemsTotalAboveTheMinimum(): void
     {
         $order = $this->createOrder(7250, new MinimumOrderValueChannel(50.0));
 
@@ -111,6 +111,34 @@ final class MinimumOrderValueCheckerTest extends TestCase
         self::assertTrue($result->allowed);
         self::assertNull($result->message);
         self::assertSame(50.0, $result->minimumOrderValue);
+    }
+
+    #[Test]
+    public function evaluatesTheItemsTotalWhenItIsBelowTheMinimumEvenIfTheOrderTotalIsAbove(): void
+    {
+        // Shipping pushes the order total above 50.00, but the items total is still 49.99.
+        $order = $this->createMock(OrderInterface::class);
+        $order->method('getItemsTotal')->willReturn(4999);
+        $order->method('getTotal')->willReturn(6000);
+        $order->method('getChannel')->willReturn(new MinimumOrderValueChannel(50.0));
+
+        $result = $this->checker->evaluate($order);
+
+        self::assertFalse($result->allowed);
+    }
+
+    #[Test]
+    public function evaluatesTheItemsTotalWhenItMeetsTheMinimumEvenIfTheOrderTotalIsBelow(): void
+    {
+        // An order-level discount pulls the order total below 50.00, but the items total still meets the minimum.
+        $order = $this->createMock(OrderInterface::class);
+        $order->method('getItemsTotal')->willReturn(5000);
+        $order->method('getTotal')->willReturn(4500);
+        $order->method('getChannel')->willReturn(new MinimumOrderValueChannel(50.0));
+
+        $result = $this->checker->evaluate($order);
+
+        self::assertTrue($result->allowed);
     }
 
     #[Test]
@@ -128,10 +156,10 @@ final class MinimumOrderValueCheckerTest extends TestCase
         self::assertSame(19.99, $resultAtThreshold->minimumOrderValue);
     }
 
-    private function createOrder(int $total, Channel $channel): OrderInterface
+    private function createOrder(int $itemsTotal, Channel $channel): OrderInterface
     {
         $order = $this->createMock(OrderInterface::class);
-        $order->method('getTotal')->willReturn($total);
+        $order->method('getItemsTotal')->willReturn($itemsTotal);
         $order->method('getChannel')->willReturn($channel);
 
         return $order;

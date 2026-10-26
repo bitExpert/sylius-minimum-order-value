@@ -36,7 +36,7 @@ final class MinimumOrderValueListenerTest extends TestCase
     }
 
     #[Test]
-    public function blocksTheCompleteTransitionWhenTheTotalIsBelowTheMinimum(): void
+    public function blocksTheCompleteTransitionWhenTheItemsTotalIsBelowTheMinimum(): void
     {
         $event = $this->createGuardEvent($this->createOrder(4999, new MinimumOrderValueChannel(50.0)));
 
@@ -49,7 +49,7 @@ final class MinimumOrderValueListenerTest extends TestCase
     }
 
     #[Test]
-    public function allowsTheCompleteTransitionWhenTheTotalMeetsTheMinimum(): void
+    public function allowsTheCompleteTransitionWhenTheItemsTotalMeetsTheMinimum(): void
     {
         $event = $this->createGuardEvent($this->createOrder(5000, new MinimumOrderValueChannel(50.0)));
 
@@ -130,10 +130,10 @@ final class MinimumOrderValueListenerTest extends TestCase
         );
     }
 
-    private function createOrder(int $total, Channel $channel): OrderInterface
+    private function createOrder(int $itemsTotal, Channel $channel): OrderInterface
     {
         $order = $this->createMock(OrderInterface::class);
-        $order->method('getTotal')->willReturn($total);
+        $order->method('getItemsTotal')->willReturn($itemsTotal);
         $order->method('getChannel')->willReturn($channel);
 
         return $order;

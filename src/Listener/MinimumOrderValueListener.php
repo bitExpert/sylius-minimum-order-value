@@ -51,6 +51,6 @@ final readonly class MinimumOrderValueListener
             return;
         }
 
-        $event->setBlocked(true, $result->message ?? 'The order total is below the minimum order value required for this channel.');
+        $event->setBlocked(true, $result->message ?? 'The items total is below the minimum order value required for this channel.');
     }
 }
