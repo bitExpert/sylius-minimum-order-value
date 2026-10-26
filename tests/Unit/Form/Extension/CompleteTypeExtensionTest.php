@@ -40,7 +40,7 @@ final class CompleteTypeExtensionTest extends TestCase
     }
 
     #[Test]
-    public function addsATranslatedErrorWhenTheTotalIsBelowTheMinimum(): void
+    public function addsATranslatedErrorWhenTheItemsTotalIsBelowTheMinimum(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->expects(self::once())
@@ -185,10 +185,10 @@ final class CompleteTypeExtensionTest extends TestCase
         return $capturedListener;
     }
 
-    private function createOrder(int $total, string $currencyCode, Channel $channel): OrderInterface
+    private function createOrder(int $itemsTotal, string $currencyCode, Channel $channel): OrderInterface
     {
         $order = $this->createMock(OrderInterface::class);
-        $order->method('getItemsTotal')->willReturn($total);
+        $order->method('getItemsTotal')->willReturn($itemsTotal);
         $order->method('getCurrencyCode')->willReturn($currencyCode);
         $order->method('getChannel')->willReturn($channel);
 

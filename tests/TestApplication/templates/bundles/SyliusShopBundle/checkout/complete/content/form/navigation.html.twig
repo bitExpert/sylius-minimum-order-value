@@ -1,5 +1,5 @@
 {# Overrides vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/templates/checkout/complete/content/form/navigation.html.twig #}
-{# Disables the "Place order" button when the order total is below the configured minimum order value #}
+{# Disables the "Place order" button when the order items total is below the configured minimum order value #}
 
 {% set status = minimum_order_value_status() %}
 {% set disabled = status is not null and not status.allowed %}

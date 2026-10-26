@@ -16,9 +16,10 @@ use BitExpert\SyliusMinimumOrderValuePlugin\Entity\MinimumOrderValueAwareInterfa
 use Sylius\Component\Core\Model\OrderInterface;
 
 /**
- * Sylius stores monetary amounts such as order totals in the smallest currency unit (e.g. cents), while
+ * Sylius stores monetary amounts such as item totals in the smallest currency unit (e.g. cents), while
  * the minimum order value configured on the channel is stored in major units (e.g. 49.99).
- * This checker converts the configured minimum to the smallest currency unit before comparing it with the total.
+ * This checker converts the configured minimum to the smallest currency unit before comparing it with the items total,
+ * which excludes shipping costs and order-level discounts.
  */
 final readonly class MinimumOrderValueChecker implements MinimumOrderValueCheckerInterface
 {

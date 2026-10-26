@@ -2,7 +2,7 @@
 Feature: Enforcing minimum order value during checkout
     In order to ensure orders meet minimum requirements
     As a Customer
-    I want to be warned if my cart total is below the minimum order value
+    I want to be warned if my cart items total is below the minimum order value
 
     Background:
         Given the store has a channel "WEB"
@@ -13,12 +13,12 @@ Feature: Enforcing minimum order value during checkout
         And I have "PHP T-Shirt" in my cart
 
     @api
-    Scenario: Cart total below minimum order value
+    Scenario: Cart items total below minimum order value
         When I go to checkout
         Then I should see a warning that my order is below the minimum order value
 
     @ui
-    Scenario: Cart total meets minimum order value
+    Scenario: Cart items total meets minimum order value
         Given my cart total is "50.00"
         When I go to checkout
         Then I should not see a minimum order value warning
@@ -27,7 +27,7 @@ Feature: Enforcing minimum order value during checkout
     Scenario: Completing order below minimum fails
         Given my cart total is "25.00"
         When I try to complete the order
-        Then I should see an error that the order total is below minimum
+        Then I should see an error that the order items total is below minimum
         And I should be returned to the checkout
 
     @api

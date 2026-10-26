@@ -1,7 +1,8 @@
 # Sylius Minimum Order Value Plugin
 
 The **Minimum Order Value** plugin for **Sylius** allows admin users to define a minimum
-order value per channel. Orders whose total is below that value cannot be completed.
+order value per channel. Orders whose items total (the value of the products in the cart,
+excluding shipping and order-level discounts) is below that value cannot be completed.
 
 ![Minimum order value alert in cart](docs/assets/cart.png)
 
@@ -63,7 +64,7 @@ Every place that evaluates the minimum order value (workflow guard, checkout for
 depends on `BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface`.
 A service alias points the interface at the default `MinimumOrderValueChecker`, so you can swap
 in your own implementation without touching the plugin — useful when the default comparison
-(e.g. `order.total < minimum * 100`) does not match your requirements:
+(e.g. `order.itemsTotal < minimum * 100`) does not match your requirements:
 
 ```php
 <?php
