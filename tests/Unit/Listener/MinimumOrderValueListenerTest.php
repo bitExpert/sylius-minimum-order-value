@@ -133,7 +133,7 @@ final class MinimumOrderValueListenerTest extends TestCase
     private function createOrder(int $total, Channel $channel): OrderInterface
     {
         $order = $this->createMock(OrderInterface::class);
-        $order->method('getTotal')->willReturn($total);
+        $order->method('getItemsTotal')->willReturn($total);
         $order->method('getChannel')->willReturn($channel);
 
         return $order;

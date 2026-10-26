@@ -188,7 +188,7 @@ final class CompleteTypeExtensionTest extends TestCase
     private function createOrder(int $total, string $currencyCode, Channel $channel): OrderInterface
     {
         $order = $this->createMock(OrderInterface::class);
-        $order->method('getTotal')->willReturn($total);
+        $order->method('getItemsTotal')->willReturn($total);
         $order->method('getCurrencyCode')->willReturn($currencyCode);
         $order->method('getChannel')->willReturn($channel);
 
