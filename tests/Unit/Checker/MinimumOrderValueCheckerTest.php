@@ -114,6 +114,34 @@ final class MinimumOrderValueCheckerTest extends TestCase
     }
 
     #[Test]
+    public function evaluatesTheItemsTotalWhenItIsBelowTheMinimumEvenIfTheOrderTotalIsAbove(): void
+    {
+        // Shipping pushes the order total above 50.00, but the items total is still 49.99.
+        $order = $this->createMock(OrderInterface::class);
+        $order->method('getItemsTotal')->willReturn(4999);
+        $order->method('getTotal')->willReturn(6000);
+        $order->method('getChannel')->willReturn(new MinimumOrderValueChannel(50.0));
+
+        $result = $this->checker->evaluate($order);
+
+        self::assertFalse($result->allowed);
+    }
+
+    #[Test]
+    public function evaluatesTheItemsTotalWhenItMeetsTheMinimumEvenIfTheOrderTotalIsBelow(): void
+    {
+        // An order-level discount pulls the order total below 50.00, but the items total still meets the minimum.
+        $order = $this->createMock(OrderInterface::class);
+        $order->method('getItemsTotal')->willReturn(5000);
+        $order->method('getTotal')->willReturn(4500);
+        $order->method('getChannel')->willReturn(new MinimumOrderValueChannel(50.0));
+
+        $result = $this->checker->evaluate($order);
+
+        self::assertTrue($result->allowed);
+    }
+
+    #[Test]
     public function comparesWithFullCentPrecision(): void
     {
         $below = $this->createOrder(1998, new MinimumOrderValueChannel(19.99));
