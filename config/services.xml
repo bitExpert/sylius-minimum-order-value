@@ -21,6 +21,7 @@
 
         <service id="BitExpert\SyliusMinimumOrderValuePlugin\Listener\MinimumOrderValueListener">
             <argument type="service" id="BitExpert\SyliusMinimumOrderValuePlugin\Checker\MinimumOrderValueCheckerInterface" />
+            <argument type="service" id="request_stack" />
             <tag name="kernel.event_listener" event="workflow.guard" method="guardCheckoutComplete" />
         </service>
 
