@@ -27,7 +27,7 @@
         "phpstan/phpstan-doctrine": "^2.0",
         "phpstan/phpstan-symfony": "^2.1",
         "phpstan/phpstan-webmozart-assert": "^2.0",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^13.4",
         "sylius-labs/coding-standard": "^4.4",
         "sylius-labs/suite-tags-extension": "~0.2",
         "sylius/sylius-ai-dev-tools": "^0.8.0",
