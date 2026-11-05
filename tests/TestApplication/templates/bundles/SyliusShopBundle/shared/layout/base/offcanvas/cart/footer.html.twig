@@ -1,0 +1,28 @@
+{% import "@SyliusShop/shared/macro/money.html.twig" as money %}
+
+{% set cart = hookable_metadata.context.cart %}
+{% set status = minimum_order_value_status() %}
+{% set disabled = status is not null and not status.allowed %}
+
+<div class="p-3 pb-5">
+    <div class="offcanvas-footer">
+        <div class="d-flex justify-content-between py-4">
+            <div class="h5">{{ 'sylius.ui.subtotal'|trans }}:</div>
+            <div class="h5 text-end">{{ money.convertAndFormat(cart.itemsTotal) }}</div>
+        </div>
+        <div class="d-grid gap-2 pb-3">
+            <a href="{{ path('sylius_shop_cart_summary') }}" class="btn btn-light" type="button">{{ 'sylius.ui.view_and_edit_cart'|trans }}</a>
+
+            {% if disabled %}
+                <button
+                    class="btn btn-primary"
+                    aria-disabled="true" 
+                    title="{{ status.message|trans({'%minimum_order_value%': status.minimumOrderValue|default(0)|number_format(2)}) }}"
+                    disabled
+                >{{ 'sylius.ui.checkout'|trans }}</button>
+            {% else %}
+                <a href="{{ path('sylius_shop_checkout_start') }}" class="btn btn-primary" type="button">{{ 'sylius.ui.checkout'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
